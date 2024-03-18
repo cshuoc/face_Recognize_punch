@@ -1,6 +1,6 @@
-from facenet_pytorch import MTCNN, InceptionResnetV1
 import torch
 import torch.nn.functional as F
+from facenet_pytorch import MTCNN, InceptionResnetV1
 from PIL import Image, ImageDraw
 import argparse
 
@@ -11,7 +11,7 @@ def recognize_face(image_path, mtcnn, model):
     # 檢測圖像中的所有人臉
     boxes, _ = mtcnn.detect(img)
     
-    # 畫出檢測到的人臉
+    # 框出檢測到的人臉
     img_draw = img.copy()
     draw = ImageDraw.Draw(img_draw)
     print('boxes : ',boxes)
@@ -58,7 +58,7 @@ if __name__ == '__main__':
     # 添加圖像路徑參數
     parser.add_argument('--img1_path', type=str, help='第一張圖像的路徑')
     parser.add_argument('--img2_path', type=str, help='第二張圖像的路徑')
-    parser.add_argument('--threshold', type=float, default=0.88, help='相似度閾值，默認為0.85')
+    parser.add_argument('--threshold', type=float, default=0.85, help='相似度閾值，默認為0.85')
 
     # 解析命令行參數
     args = parser.parse_args()
