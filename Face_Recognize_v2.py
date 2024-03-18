@@ -1,12 +1,13 @@
-import csv
+
 import torch
+import torch.nn.functional as F
+from facenet_pytorch import MTCNN, InceptionResnetV1
+import argparse
+import csv
 import numpy as np
 from PIL import Image
-from facenet_pytorch import MTCNN, InceptionResnetV1
-import torch.nn.functional as F
-import argparse
 
-# 初始化 MTCNN 和 InceptionResnetV1
+# 載入 MTCNN 和 InceptionResnetV1
 mtcnn = MTCNN(keep_all=True)
 model = InceptionResnetV1(pretrained='vggface2').eval()
 
@@ -77,7 +78,7 @@ if __name__ == '__main__':
     parser.add_argument('--add_new_face', type=bool, default=False, help='新增面孔')
     parser.add_argument('--new_face_name', type=str, default='', help='新面孔圖片的名字')
     parser.add_argument('--new_face_path', type=str, default='', help='新面孔圖片的路徑')
-    parser.add_argument('--face_csv_path', type=str, default='C:/Users/user/Desktop/shuo/face_id/face_database.csv', help='人臉資料csv路徑')
+    parser.add_argument('--face_csv_path', type=str, default='', help='記錄人臉資料csv路徑')
     args = parser.parse_args()
 
     csv_file_path = args.face_csv_path
@@ -88,9 +89,9 @@ if __name__ == '__main__':
     # 添加新的人臉數據到資料庫
     if args.add_new_face is True:
         face_paths_labels = [
-            # ('C:/Users/user/Desktop/shuo/face_id/musk.jpg', 'musk'),
-            # ('C:/Users/user/Desktop/shuo/face_id/宋.jpg', '宋少卿'),
-            # ('C:/Users/user/Desktop/shuo/face_id/屈.jpg', '屈中恆'),
+            #('PICTURE_1', 'NAME_1'),
+            # ('PICTURE_2', 'NAME_2'),
+            # ('PICTURE_3', 'NAME_3'),
             (args.new_face_path, args.new_face_name),
         ]
         for path, label in face_paths_labels:
@@ -98,9 +99,9 @@ if __name__ == '__main__':
 
     # 辨識圖片中的人臉
     image_paths = [
-        # 'C:/Users/user/Desktop/shuo/face_id/鈕.jpg',
-        'C:/Users/user/Desktop/shuo/face_id/劉.jpg',
-        # 'C:/Users/user/Desktop/shuo/face_id/Jay_1.jpg',
+        # 'img_path_1',
+        # 'img_path_2',
+        # 'img_path_3',
         args.img_path,
     ]
     for image_path in image_paths:
