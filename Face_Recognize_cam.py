@@ -1,87 +1,29 @@
-import tkinter as tk
-from tkinter import simpledialog
-import argparse
-import csv
+import os
+import cv2
 import torch
 import numpy as np
 from PIL import Image
 from facenet_pytorch import InceptionResnetV1
 import torch.nn.functional as F
-import cv2
-import datetime
-import os
+
+import csv
 import pandas as pd
+import datetime
+import argparse
+import tkinter as tk
+from tkinter import simpledialog
 from PIL import Image, ImageTk
+from Face_Recognize_cam_csv import save_face_database, load_face_database, punch_in_log
 
-def save_face_database(face_database, csv_file_path):
-    with open(csv_file_path, mode='w', newline='') as file:
-        writer = csv.writer(file)
-        writer.writerow(['label', 'embedding'])
-        for label, data in face_database.items():
-            embedding_str = ','.join(map(str, data['embedding'].tolist()))
-            writer.writerow([label, embedding_str])
-
-def load_face_database(csv_file_path):
-    face_database = {}
-    try:
-        with open(csv_file_path, mode='r') as file:
-            reader = csv.DictReader(file)
-            for row in reader:
-                label = row['label']
-                embedding = np.array(list(map(float, row['embedding'].split(','))))
-                face_database[label] = {'embedding': torch.tensor(embedding), 'label': label}
-    except FileNotFoundError:
-        print(f"No database found at {csv_file_path}, starting a new database.")
-    return face_database
-   
-def punch_in_log(punch_data_path, name):
-    global df
-    now = datetime.datetime.now()
-    current_time = now.strftime('%H:%M')
-    is_morning = now.hour < 12  # 判斷是否是上午
-    today_date = now.strftime('%Y-%m-%d')
-    mon_date = now.strftime('%Y_%m')
-
-    # 讀取CSV文件
-    empolyee_file_path = punch_data_path + '/' + name
-    if not os.path.exists(empolyee_file_path):
-        os.makedirs(empolyee_file_path)
-
-    log_file_path = empolyee_file_path + '/' + name + '_' + str(mon_date) + '.csv'#
-    
-    print(empolyee_file_path)    
-    try:
-        df = pd.read_csv(log_file_path)
-    except FileNotFoundError:
-        df = pd.DataFrame(columns=['Date', 'punch in', 'punch out'])
-        df.to_csv(log_file_path, index=False)
-
-    # 檢查是否已有當日記錄
-    record = df[df['Date'] == today_date]
-    
-    if record.empty:
-        # 如果沒有當日記錄，則新增
-        new_record = {'Date': today_date, 'punch in': '', 'punch out': ''}
-        df = df._append(new_record, ignore_index=True)
-    else:
-        # 如果已有當日記錄，則根據需要更新
-        if is_morning and pd.isna(record['punch in'].values[0]):
-            df.loc[df['Date'] == today_date, 'punch in'] = current_time
-        if not is_morning and pd.isna(record['punch out'].values[0]):
-            df.loc[df['Date'] == today_date, 'punch out'] = current_time
-    
-    # 保存到CSV
-    df.to_csv(log_file_path, index=False)  
-    return True  
-
+# 資料存放位置的創建順序 : 存放資料夾(punch_data) -> 人名資料夾(name) -> 月份.csv
 def run_face_recognition(args, input_id):
-    # 初始化 InceptionResnetV1
+    # 載入 InceptionResnetV1
     model = InceptionResnetV1(pretrained='vggface2').eval()
     face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades+'haarcascade_frontalface_default.xml')
     eye_cascade = cv2.CascadeClassifier(cv2.data.haarcascades+'haarcascade_eye.xml')
     csv_file_path = args.face_csv_path
 
-    # 载入人脸数据库
+    # 載入人臉資料
     face_database = load_face_database(csv_file_path)
 
     if input_id not in face_database:
@@ -111,7 +53,7 @@ def run_face_recognition(args, input_id):
                     cv2.rectangle(face_area, (ex, ey), (ex+ew, ey+eh), (0, 255, 0), 2)
 
                 results = recognize_face_from_frame(frame, face_cascade, model, face_database, threshold=0.8)
-                if results == input_id:  # 檢查辨識結果是否與輸入的工號匹配
+                if results == input_id:  # 檢查辨識結果是否與輸入的id匹配
                     punch_in = punch_in_log(args.log_file_path, input_id)
                     if punch_in:
                         entry = True
@@ -127,6 +69,7 @@ def run_face_recognition(args, input_id):
 
 def add_new_face_from_frame(frame, label, face_cascade, model, face_database, csv_file_path):
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    # 用人臉級聯分類器找出人臉位置
     faces = face_cascade.detectMultiScale(gray, 1.3, 5)
     for (x, y, w, h) in faces:
         face = frame[y:y+h, x:x+w]
@@ -165,7 +108,7 @@ def add_new_face(input_id, face_cascade, model, face_database, csv_file_path):
         key = cv2.waitKey(1) & 0xFF
         if key == 27:
             break
-        elif key == 13:  # 按下 ENTER 鍵
+        elif key == 13:  # 按下 ENTER 鍵，新增人臉資料
             add_new_face_from_frame(frame, input_id, face_cascade, model, face_database, csv_file_path)
             face_added = True
             
@@ -211,7 +154,7 @@ def create_interface(args):
     root.geometry("350x350")
 
     # 加載圖片並顯示，假設圖片文件名為"face_recognition_icon.png"，位於與此腳本相同的目錄中
-    img = Image.open("C:/Users/user/Downloads/logo.jpg")
+    img = Image.open("face_recognition_icon.png")
     img = img.resize((200, 200), Image.Resampling.LANCZOS)  # 調整圖片大小
     photo = ImageTk.PhotoImage(img)
     label_img = tk.Label(root, image=photo)
@@ -236,8 +179,8 @@ def create_interface(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='人臉辨識系統')
-    parser.add_argument('--face_csv_path', type=str, default='C:/Users/user/Desktop/shuo/face_id/face_data.csv', help='人臉資料csv路徑')
-    parser.add_argument('--log_file_path', type=str, default='C:/Users/user/Desktop/shuo/face_id/punch_data/', help='打卡csv路徑')#'C:/Users/user/Desktop/shuo/face_id/punch_in_data.csv'
+    parser.add_argument('--face_csv_path', type=str, default='', help='人臉資料csv路徑')
+    parser.add_argument('--log_file_path', type=str, default='', help='打卡csv路徑所在的資料夾')
     
     args = parser.parse_args()
     create_interface(args)
