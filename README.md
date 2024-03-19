@@ -32,13 +32,12 @@
 - 相關 Python 依賴包
 ```bash
 pip install -r requirements.txt
-```bash
-
+```
 ### 安裝
 
 複製這些程式到電腦：
 
 ```bash
 git clone https://github.com/cshuoc/face_Recognize_punch.git
-
+```
 
