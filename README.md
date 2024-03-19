@@ -24,13 +24,13 @@
 
 ### 所需套件
 
--numpy
--python
--opencv-python
--torch>=1.7.1
--facenet-pytorch
--pandas
--Pillow
+- numpy
+- python
+- opencv-python
+- torch>=1.7.1
+- facenet-pytorch
+- pandas
+- Pillow
 
 ### 安裝
 若已完成環境設置，執行以下操作。
@@ -64,7 +64,7 @@ pip install -r requirements.txt
 
 ```bash
 conda create -n your_env python
-ˋˋˋ
+```
 
 ## 安裝 PyTorch
 
@@ -74,19 +74,19 @@ PyTorch 的安裝取決於系統配置（操作系統，是否需要 CUDA 支持
 
 ```bash
 pip install torch torchvision torchaudio
-ˋˋˋ
+```
 ### GPU 版本
 支援 CUDA 11.3 的 Windows 系統，其他版本請至Pytorch官網查看
 
 ```bash
 pip install torch torchvision torchaudio torchtext --extra-index-url https://download.pytorch.org/whl/cu113
-ˋˋˋ
+```
 
 ### 啟動環境
 
 ˋˋˋbash
 conda activate your_env
-ˋˋˋ
+```
 
 ### 驗證安裝是否安裝成功
 
