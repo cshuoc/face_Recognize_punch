@@ -22,16 +22,18 @@
 
 ## 開始使用
 
-每個子項目都有詳細的安裝和使用指南，請訪問對應的子目錄查看 README 文件。
+### 所需套件
 
-### 先決條件
-
-- Python 3.x
-- Torch >= 1.7.1
-- OpenCV
-- 相關 Python 依賴包
+-numpy
+-python
+-opencv-python
+-torch>=1.7.1
+-facenet-pytorch
+-pandas
+-Pillow
 
 ### 安裝
+若已完成環境設置，執行以下操作。
 
 複製程式：
 
@@ -43,4 +45,55 @@ git clone https://github.com/cshuoc/face_Recognize_punch.git
 ```bash
 pip install -r requirements.txt
 ```
+
+# PyTorch 環境設置
+
+如何在機器上設置 PyTorch 環境，以便運行 PyTorch 相關的項目。
+
+## 前提條件
+
+系統需安裝以下軟體：
+
+- pip (Python 包管理器)
+- Anaconda 或 Miniconda
+  
+## 建立環境
+
+開啟編譯器或Anaconda Prompt
+用 conda 建立環境，環境名稱為your_env(可自行命名)，同時安裝python(若要指定python版本請改成python = 3.x)
+
+```bash
+conda create -n your_env python
+ˋˋˋ
+
+## 安裝 PyTorch
+
+PyTorch 的安裝取決於系統配置（操作系統，是否需要 CUDA 支持等）。
+
+### CPU 版本
+
+```bash
+pip install torch torchvision torchaudio
+ˋˋˋ
+### GPU 版本
+支援 CUDA 11.3 的 Windows 系統，其他版本請至Pytorch官網查看
+
+```bash
+pip install torch torchvision torchaudio torchtext --extra-index-url https://download.pytorch.org/whl/cu113
+ˋˋˋ
+
+### 啟動環境
+
+ˋˋˋbash
+conda activate your_env
+ˋˋˋ
+
+### 驗證安裝是否安裝成功
+
+```bash
+import torch
+print(torch.__version__)
+print(torch.cuda.is_available())
+```
+
 
