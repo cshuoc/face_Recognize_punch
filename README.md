@@ -84,7 +84,7 @@ pip install torch torchvision torchaudio torchtext --extra-index-url https://dow
 
 ### 啟動環境
 
-ˋˋˋbash
+```bash
 conda activate your_env
 ```
 
