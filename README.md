@@ -30,12 +30,14 @@
 - PyTorch
 - OpenCV
 - 相關 Python 依賴包
+pip install -r requirements.txt
+
 
 ### 安裝
 
-克隆這個倉庫到本地：
+複製這些程式到電腦：
 
 ```bash
-git clone https://github.com/yourgithub/face_recognition_series.git
+git clone https://github.com/cshuoc/face_Recognize_punch.git
 
 
