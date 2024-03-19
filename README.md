@@ -27,17 +27,20 @@
 ### 先決條件
 
 - Python 3.x
-- PyTorch
+- Torch >= 1.7.1
 - OpenCV
 - 相關 Python 依賴包
-```bash
-pip install -r requirements.txt
-```
+
 ### 安裝
 
-複製這些程式到電腦：
+複製程式：
 
 ```bash
 git clone https://github.com/cshuoc/face_Recognize_punch.git
+```
+
+安裝套件:
+```bash
+pip install -r requirements.txt
 ```
 
