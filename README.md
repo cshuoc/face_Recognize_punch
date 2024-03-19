@@ -42,23 +42,21 @@ git clone https://github.com/cshuoc/face_Recognize_punch.git
 ```
 
 安裝套件:
+
 ```bash
 pip install -r requirements.txt
 ```
 
 # PyTorch 環境設置
-
 如何在機器上設置 PyTorch 環境，以便運行 PyTorch 相關的項目。
 
 ## 前提條件
-
 系統需安裝以下軟體：
 
 - pip (Python 包管理器)
 - Anaconda 或 Miniconda
   
 ## 建立環境
-
 開啟編譯器或Anaconda Prompt
 用 conda 建立環境，環境名稱為your_env(可自行命名)，同時安裝python(若要指定python版本請改成python = 3.x)
 
@@ -75,6 +73,7 @@ PyTorch 的安裝取決於系統配置（操作系統，是否需要 CUDA 支持
 ```bash
 pip install torch torchvision torchaudio
 ```
+
 ### GPU 版本
 支援 CUDA 11.3 的 Windows 系統，其他版本請至Pytorch官網查看
 
@@ -89,6 +88,7 @@ conda activate your_env
 ```
 
 ### 驗證安裝是否安裝成功
+可直接在cmd中輸入 "python" 後直接輸入已下指令，最後輸入 "exit()" 退出。
 
 ```bash
 import torch
