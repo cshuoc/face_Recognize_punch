@@ -58,7 +58,7 @@ pip install -r requirements.txt
   
 ## 建立環境
 開啟編譯器或Anaconda Prompt
-用 conda 建立環境，環境名稱為your_env(可自行命名)，同時安裝python(若要指定python版本請改成python = 3.x)
+用 conda 建立環境，環境名稱為your_env(可自行命名)，同時安裝python(若要指定python版本，請改成python = 3.x)
 
 ```bash
 conda create -n your_env python
