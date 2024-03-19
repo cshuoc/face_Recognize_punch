@@ -48,7 +48,7 @@ pip install -r requirements.txt
 ```
 
 # PyTorch 環境設置
-如何在機器上設置 PyTorch 環境，以便運行 PyTorch 相關的項目。
+如何在機器上設置 PyTorch 環境，以便運行 PyTorch 相關套件。
 
 ## 前提條件
 系統需安裝以下軟體：
