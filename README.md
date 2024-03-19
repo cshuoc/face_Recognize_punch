@@ -30,6 +30,7 @@
 - PyTorch
 - OpenCV
 - 相關 Python 依賴包
+```bash
 pip install -r requirements.txt
 
 
