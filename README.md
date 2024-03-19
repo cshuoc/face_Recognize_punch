@@ -1,20 +1,41 @@
-1. Face_Recognize_v1 : 透過Pytorchc及Opencv來實作人臉辨識
+# 人臉辨識系列項目
 
-2. Face_Recognize_v2 : 加入資料儲存的功能，記憶人臉資料。
+這個倉庫包含了一系列進行人臉辨識的項目，使用了 PyTorch、OpenCV 並結合實時攝像頭偵測，實現了從基本的人臉辨識到具備資料儲存和時間記錄功能的應用。
 
-3. OpenCV_with_cam : 連接鏡頭實現實時偵測。
+## 項目列表
 
-4. Face_Recognize_cam : 加入記錄時間的功能，依照人名和月份來儲存時間，及創建UI介面，可應用在上下班打卡
+### Face_Recognize_v1
 
-# 項目名稱
+透過 PyTorch 和 OpenCV 來實作基本的人臉辨識功能。
 
-這是一個關於項目的簡短描述，說明項目的目的、特點和它解決的問題。
+### Face_Recognize_v2
 
-## 開始
+在 `Face_Recognize_v1` 的基礎上加入資料儲存功能，能夠記憶人臉資料。
 
-這部分提供如何開始使用項目的指南。
+### OpenCV_with_cam
+
+展示如何連接鏡頭實現實時人臉偵測。
+
+### Face_Recognize_cam
+
+結合人臉辨識和時間記錄功能，依照人名和月份來儲存時間資料，並創建了用戶介面，適用於上下班打卡系統。
+
+## 開始使用
+
+每個子項目都有詳細的安裝和使用指南，請訪問對應的子目錄查看 README 文件。
 
 ### 先決條件
 
-在開始之前，你需要安裝的東西：
+- Python 3.x
+- PyTorch
+- OpenCV
+- 相關 Python 依賴包
+
+### 安裝
+
+克隆這個倉庫到本地：
+
+```bash
+git clone https://github.com/yourgithub/face_recognition_series.git
+
 
